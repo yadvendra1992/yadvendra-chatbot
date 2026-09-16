@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yadvendra's Assistant</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;display:flex;justify-content:center;align-items:center;min-height:100vh}
+  .chat{width:100%;max-width:420px;height:650px;background:white;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.15);display:flex;flex-direction:column}
+  .header{background:#075e54;color:white;padding:18px 20px}
+  .header h2{margin:0;font-size:20px}.header p{margin:5px 0 0;font-size:13px;opacity:.9}
+  .messages{flex:1;padding:18px;overflow-y:auto;background:#efeae2}
+  .msg{max-width:88%;padding:11px 14px;border-radius:14px;margin-bottom:10px;font-size:14px;line-height:1.45}
+  .bot{background:white;border-top-left-radius:4px}
+  .user{background:#d9fdd3;margin-left:auto;border-top-right-radius:4px}
+  .buttons{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  button{border:0;background:white;border:1px solid #128c7e;color:#075e54;padding:11px 12px;border-radius:10px;text-align:left;cursor:pointer;font-size:14px}
+  button:hover{background:#e8f8f5}
+  .wa{background:#25d366;color:white;border:none;text-align:center;font-weight:bold}
+  .wa:hover{background:#1ebe5d}
+  .footer{padding:12px;background:white;border-top:1px solid #ddd}
+  .small{font-size:11px;color:#777;text-align:center}
+</style>
+</head>
+<body>
+<div class="chat">
+  <div class="header">
+    <h2>Yadvendra's Assistant</h2>
+    <p>Research & Academic Enquiries</p>
+  </div>
+  <div class="messages" id="messages"></div>
+  <div class="footer"><div class="small">Select an option below to continue</div></div>
+</div>
+
+<script>
+const WHATSAPP_NUMBER = "91XXXXXXXXXX"; // Replace with your WhatsApp number
+
+const messages = document.getElementById("messages");
+
+function addMessage(text, type="bot"){
+  const div=document.createElement("div");
+  div.className="msg "+type;
+  div.innerHTML=text;
+  messages.appendChild(div);
+  messages.scrollTop=messages.scrollHeight;
+}
+
+function addButtons(items){
+  const wrap=document.createElement("div");
+  wrap.className="buttons";
+  items.forEach(item=>{
+    const b=document.createElement("button");
+    b.textContent=item.label;
+    b.onclick=item.action;
+    wrap.appendChild(b);
+  });
+  messages.appendChild(wrap);
+  messages.scrollTop=messages.scrollHeight;
+}
+
+function menu(){
+  addButtons([
+    {label:"🔬 Research Collaboration", action:research},
+    {label:"📚 Publications", action:publications},
+    {label:"🎓 PhD / Academic Query", action:academic},
+    {label:"📧 Contact Me", action:contact},
+    {label:"💬 Continue on WhatsApp", action:whatsapp}
+  ]);
+}
+
+function research(){
+  addMessage("🔬 Research Collaboration","user");
+  addMessage("My research interests include RF & Microwave Engineering, antennas, SIW structures and circular polarization. For a detailed discussion, you can contact me on WhatsApp.");
+  addButtons([{label:"💬 Discuss on WhatsApp",action:whatsapp},{label:"↩️ Main Menu",action:menu}]);
+}
+
+function publications(){
+  addMessage("📚 Publications","user");
+  addMessage("You can explore my research publications, including journal and conference papers, through my academic profiles.");
+  addButtons([{label:"💬 Ask me on WhatsApp",action:whatsapp},{label:"↩️ Main Menu",action:menu}]);
+}
+
+function academic(){
+  addMessage("🎓 PhD / Academic Query","user");
+  addMessage("For PhD research, academic discussions, or technical queries, please send me a message on WhatsApp with your question.");
+  addButtons([{label:"💬 Ask on WhatsApp",action:whatsapp},{label:"↩️ Main Menu",action:menu}]);
+}
+
+function contact(){
+  addMessage("📧 Contact Me","user");
+  addMessage("You can contact me directly through WhatsApp for research and academic enquiries.");
+  addButtons([{label:"💬 Open WhatsApp",action:whatsapp},{label:"↩️ Main Menu",action:menu}]);
+}
+
+function whatsapp(){
+  const text=encodeURIComponent("Hi Yadvendra, I visited your website and would like to know more about your research.");
+  window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+text,"_blank");
+}
+
+addMessage("👋 Hello! Welcome to my research website.<br><br>Yes, how can I help you?");
+menu();
+</script>
+</body>
+</html>
